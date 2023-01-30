@@ -7,7 +7,7 @@ function App() {
  const [list, setList] = useState([]);
  const [input, setInput] = useState("");
 
- const [status, setUnderline] = useState(false);
+ const [status, setUnderline] = useState([false, '']);
 
 
  // helper functions
@@ -19,23 +19,33 @@ function App() {
    const newtodo = {
      id: Math.random(),
      todo: todo,
-     status: Math.random(),
+     done:false
    }
    // add todo to the list
    setList([...list, newtodo]);
    // clear input box
    setInput("");
  }
- const deleteTodo = (id) => {
-   const newList = list.filter((todo) => todo.id !== id)
-   setList(newList);
- }
+//  const deleteTodo = (id) => {
+//    const newList = list.filter((todo) => todo.id !== id)
+//    setList(newList);
+//  }
  const handleUnderlineChange = (e) => {
-
-    setUnderline(e.target.checked);
+  const newListToDo = list.map(todo => {
+    if(todo.id === e )
+      return {...todo, done:!todo.done}
+    return todo; 
+  })
+  console.log(newListToDo)
+  setList(newListToDo)
+    // setUnderline(e.target.checked);
  };
 
-
+ const handlecheckboxchange = ()=>{
+  if(todo.done)
+  return null;
+  handleUnderlineChange(todo.id);
+ }
  return (
    <div>
      <h1>My to do list: </h1>
@@ -47,13 +57,15 @@ function App() {
      <button onClick={() => addtodo(input)}>Add</button>
      <ul>
        {list.map((todo) => (
-         <li key={todo.id} style={{ textDecorationLine:  status ? 'underline' : 'normal' }}>
+         <li key={todo.id} style={todo.done ? {textDecoration:"line-through"} : null} >
            {todo.todo}
            <input 
            name="underline" 
            type="checkbox" 
-           value={status} 
-           onChange={()=>{handleUnderlineChange}}
+         //  value={status} 
+           key={todo.id}
+        // checked={todo.done}
+            onChange={()=>{ handleUnderlineChange(todo.id)}}
            ></input>
            <button className='deleteButton' key={todo.id} onClick={() => deleteTodo(todo.id)}> x </button>
          </li>
@@ -65,5 +77,6 @@ function App() {
  )
 }
 
+ // textDecorationLine:  status ? 'underline' : 'normal' 
 
 export default App
