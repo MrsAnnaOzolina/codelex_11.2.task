@@ -4,7 +4,9 @@ import './App.css'
 
 
 function App() {
- const [list, setList] = useState([]);
+ const [list, setList] = useState([
+
+ ]);
  const [input, setInput] = useState("");
 
  const [status, setUnderline] = useState([false, '']);
@@ -26,10 +28,10 @@ function App() {
    // clear input box
    setInput("");
  }
-//  const deleteTodo = (id) => {
-//    const newList = list.filter((todo) => todo.id !== id)
-//    setList(newList);
-//  }
+ const deleteTodo = (id) => {
+   const newList = list.filter((todo) => todo.id !== id)
+   setList(newList);
+ }
  const handleUnderlineChange = (e) => {
   const newListToDo = list.map(todo => {
     if(todo.id === e )
